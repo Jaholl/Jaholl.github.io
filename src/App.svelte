@@ -2,6 +2,9 @@
 let working = true
 $: jobbar = working ? "Ja :(" : "NEJ!"
 $: src = working ? "" :  "ErikJobbarInte.jpg"
+$: jobbarClass = working ? "jobbar" : "jobbarInte"
+$: hanSlutar = working ? "Men han slutar om:" : ""
+$: timer = ""
 setInterval(() => {
 	let time = new Date()
 	let today = new Date().getDay()
@@ -24,6 +27,29 @@ setInterval(() => {
 		}
 	}
 }, 100);
+setInterval(() => {
+	let time = new Date()
+	let lunchExp = new Date().setHours(13, 0, 0, 0)
+	let kvallsExp = new Date().setHours(18, 0, 0, 0)
+	if (working){
+		if (time.getHours() === 11 ||
+			time.getHours() === 12){
+				let tidKvar = new Date(lunchExp-time)
+				timer = tidKvar.getHours() + " timmar, "
+				+ tidKvar.getMinutes() + " minuter, "
+				+ tidKvar.getSeconds() + " sekunder"
+		}
+		else
+		if (time.getHours() === 17){
+				let tidKvar = new Date(kvallsExp-time)
+				timer = tidKvar.getHours() + " timmar, "
+				+ tidKvar.getMinutes() + " minuter, "
+				+ tidKvar.getSeconds() + " sekunder"
+		}
+	} else {
+		timer = ""
+	}
+}, 100);
 </script>
 
 <div>
@@ -32,9 +58,16 @@ setInterval(() => {
 			Jobbar Erik nu?
 		</center>
 	</h1>
-	<div>
+	<div id="jobbar" class="{jobbarClass}">
 		<center>
 			{jobbar}
+		</center>
+	</div>
+	<div>
+		<center>
+			{hanSlutar}
+			<br/>
+			{timer}
 		</center>
 	</div>
 	<img {src} alt=""/>
@@ -52,6 +85,11 @@ img {
 	height: 20em;
 	display: flex;
 	justify-content: center;
-	
+}
+.jobbar {
+	color: red;
+}
+.jobbarInte{
+	color: green;
 }
 </style>
