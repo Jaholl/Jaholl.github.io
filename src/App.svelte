@@ -13,7 +13,8 @@ setInterval(() => {
 	} else if (today === 2 || today === 4){
 		if (time.getHours() === 11 ||
 			time.getHours() === 12 ||
-			time.getHours() === 17){
+			time.getHours() === 17 ||
+			time.getHours() === 20){
 			working = true
 		} else {
 			working = false
@@ -29,8 +30,8 @@ setInterval(() => {
 }, 100);
 setInterval(() => {
 	let time = new Date()
-	let lunchExp = new Date().setHours(13, 0, 0, 0)
-	let kvallsExp = new Date().setHours(18, 0, 0, 0)
+	let lunchExp = new Date().setHours(13 + time.getTimezoneOffset()/60, 0, 0, 0)
+	let kvallsExp = new Date().setHours(20 + time.getTimezoneOffset()/60, 0, 0, 0)
 	if (working){
 		if (time.getHours() === 11 ||
 			time.getHours() === 12){
@@ -40,7 +41,8 @@ setInterval(() => {
 				+ tidKvar.getSeconds() + " sekunder"
 		}
 		else
-		if (time.getHours() === 17){
+		if (time.getHours() === 17 ||
+			time.getHours() === 20){
 				let tidKvar = new Date(kvallsExp-time)
 				timer = tidKvar.getHours() + " timmar, "
 				+ tidKvar.getMinutes() + " minuter, "
